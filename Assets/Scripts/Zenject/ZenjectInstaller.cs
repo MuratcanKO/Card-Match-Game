@@ -4,6 +4,6 @@ public class ZenjectInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<ZenjectInstaller>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<TimerController>().FromComponentInHierarchy().AsSingle();
     }
 }
