@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour, ICardInteractable
 {
     public Animator cardAnimator;
     public int cardIndex;
-
+    public Image cardImage;
 
     public void PlayCorrectAnimation()
     {
