@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuUIManager : MonoBehaviour
+public class GameUIManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject loadingImage;
+    private GameObject settingsUIScreen;
+
+    [SerializeField]
+    private GameObject gameOverUIScreen;
+
+    [SerializeField]
+    private SceneLoader menuSceneLoader;
 
     [SerializeField]
     private Image musicImage;
@@ -15,20 +21,28 @@ public class MenuUIManager : MonoBehaviour
     [SerializeField]
     private Sprite soundOffSprite;
 
-    [SerializeField]
-    private GameObject buttonPlay;
 
-    [SerializeField]
-    private SceneLoader menuSceneLoader;
-
-    public void PlayButtonClicked()
+    public void SettingsButtonClicked()
     {
-        buttonPlay.SetActive(false);
-        loadingImage.SetActive(true);
+        settingsUIScreen.SetActive(true);
+    }
+
+    public void ReturnHomeButtonClicked()
+    {
+        menuSceneLoader.AsyncSceneLoader(GlobalConstants.MENU_SCENE_NAME);
+    }
+
+    public void ContinueButtonClicked()
+    {
+        settingsUIScreen.SetActive(false);
+    }
+
+    public void RestartButtonClicked()
+    {
         menuSceneLoader.AsyncSceneLoader(GlobalConstants.GAME_SCENE_NAME);
     }
 
-    public void MusicButtonClicked() 
+    public void MusicButtonClicked()
     {
         if (GlobalManager.Instance.audioManager.IsPlaying(GlobalConstants.THEME_SONG_NAME))
         {
@@ -40,6 +54,10 @@ public class MenuUIManager : MonoBehaviour
             GlobalManager.Instance.audioManager.Play(GlobalConstants.THEME_SONG_NAME);
             musicImage.sprite = soundOnSprite;
         }
+    }
 
+    public void GameOver()
+    {
+        gameOverUIScreen.SetActive(true);
     }
 }

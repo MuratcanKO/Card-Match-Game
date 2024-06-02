@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuSceneLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
     public void AsyncSceneLoader(string sceneName)
     {
