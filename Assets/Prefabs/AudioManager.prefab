@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6231183446963371111}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,4 +44,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a31c0c9dd8fcc34cbcaefbc47e904ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: correctSFX
+    clip: {fileID: 8300000, guid: 78b5f2c3e6d8a5a4083707a7041621ff, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: wrongSFX
+    clip: {fileID: 8300000, guid: e1c88bcc246c8aa48b3aa18a09190350, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: flipSFX
+    clip: {fileID: 8300000, guid: c88a57e19175c3c4c95839a5122ca6ac, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: gameOverSFX
+    clip: {fileID: 8300000, guid: 4fd1e5668fc48814a864140fd7e9d145, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: theme
+    clip: {fileID: 8300000, guid: de07cad69a0ae8947a3bba17cb722a35, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}

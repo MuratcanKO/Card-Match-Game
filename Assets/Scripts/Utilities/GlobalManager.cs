@@ -8,6 +8,7 @@ public class GlobalManager : MonoBehaviour
     private GameObject parentObj;
 
     public AudioManager audioManager { get; private set; }
+    public SettingsReader settingsReader { get; private set; }
 
     private void Awake()
     {
@@ -20,5 +21,6 @@ public class GlobalManager : MonoBehaviour
         Instance = this;
 
         audioManager = GetComponentInChildren<AudioManager>();
+        settingsReader = GetComponentInChildren<SettingsReader>();
     }
 }
