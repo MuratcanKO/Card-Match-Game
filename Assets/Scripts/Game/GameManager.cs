@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 public class GameManager : MonoBehaviour
@@ -17,7 +18,8 @@ public class GameManager : MonoBehaviour
     private PlayerPrefsManager playerPrefsManager;
 
     [Inject]
-    private PairMatchController pairMatchController;
+    private ScoreManager scoreManager;
+
 
     private List<CardData> currentLevelCardList = new List<CardData>();
 
@@ -29,40 +31,48 @@ public class GameManager : MonoBehaviour
     private int minimumTimerCount = 30;
     private int scoreCountPerMatch = 50;
     private int maximumComboCount = 5;
+    private int currentComboCount = 1;
     private int currentLevel = 1;
     private int currentScore = 0;
+    private int currentMatchCount = 0;
+    private int targetMatchCount = 0;
+    private int currentTurnCount = 0;
+    private float waitForRemoveAnimations = 1f;
+
+    private bool isGameOver = false;
 
     private Sprite[] pairsImages;
 
     private int currentLevelPairsCount;
 
+    public GameObject confettiRainbowPrefab;
+
     void Start()
     {
         Input.multiTouchEnabled = false;
         GetSettingsValues();
-        timerController.SetTimerValue(firstLevelTimerCount, timerDescreaseCountPerLevel, minimumTimerCount, currentLevel);
-        CreateCardList();
-        ShuffleCardList();
-        levelManager.InstantiateCards(currentLevelCardList);
+        CreateLevel(0);
     }
 
     void Update()
     {
-        if (timerController.currentTime <= 0f)
+        if (timerController.currentTime <= 0f && !isGameOver)
         {
             GameOver();
-            gameUIManager.GameOver();
         }
-        if (pairMatchController != null)
-        {
-            Debug.Log("YES");
-        }
-        
     }
 
     private void GameOver()
     {
-        Debug.Log("GameOver");
+        isGameOver = true;
+        GlobalManager.Instance.audioManager.Play(GlobalConstants.GAME_OVER_SFX_NAME);
+        gameUIManager.GameOver();
+    }
+
+    private void NextLevel()
+    {
+        currentLevel++;
+        CreateLevel(waitForRemoveAnimations);
     }
 
     private void GetSettingsValues()
@@ -107,8 +117,51 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ResetCardList(List<Card> cardList)
+    private void ResetCardList(List<CardData> cardList)
     {
         cardList.Clear();
+    }
+
+    public void CorrectCardMatch()
+    {
+        scoreManager.AddScore(scoreCountPerMatch, currentComboCount);
+        currentComboCount = Mathf.Min(currentComboCount + 1, maximumComboCount);
+        currentMatchCount++;
+        currentTurnCount++;
+        if (currentMatchCount == targetMatchCount)
+        {
+            NextLevel();
+        }
+    }
+
+    public void WrongCardMatch()
+    {
+        currentComboCount = 1;
+        currentTurnCount++;
+    }
+
+    private void CreateLevel(float delaySecond)
+    {
+        levelManager.ClearScene();
+        currentLevelPairsCount = levelManager.CurrentLevelPairsCountCalculater(firstLevelPairsCount, pairsIncreaseCountPerLevel,
+            maximumPairsCount, currentLevel);
+        timerController.ResetTimer();
+        timerController.SetTimerValue(firstLevelTimerCount, timerDescreaseCountPerLevel, minimumTimerCount, currentLevel);
+        ResetCardList(currentLevelCardList);
+        CreateCardList();
+        ShuffleCardList();
+        targetMatchCount = currentLevelPairsCount;
+        currentMatchCount = 0;
+        currentTurnCount = 0;
+        currentComboCount = 1;
+        StartCoroutine(LevelInstantiate(delaySecond));
+        
+    }
+
+    private IEnumerator LevelInstantiate(float delayForAnimation)
+    {
+        yield return new WaitForSeconds(delayForAnimation);
+
+        levelManager.InstantiateCards(currentLevelCardList);
     }
 }

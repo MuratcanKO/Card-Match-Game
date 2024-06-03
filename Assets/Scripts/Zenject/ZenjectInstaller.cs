@@ -12,6 +12,8 @@ public class ZenjectInstaller : MonoInstaller
         Container.Bind<GameUIManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<LevelManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<PairMatchController>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<GameManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<CellSizeFlexable>().FromComponentInHierarchy().AsSingle();
 
         Container.BindFactory<Card, CardFactory>().FromComponentInNewPrefab(cardPrefab);
     }

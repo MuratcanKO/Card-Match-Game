@@ -1502,7 +1502,7 @@ Camera:
   m_GameObject: {fileID: 1342250862}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0.36078432, b: 0.60784316, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1642,6 +1642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b72cb6dccf01b64db337e04a47af616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  confettiRainbowPrefab: {fileID: 0}
 --- !u!1 &1596167446
 GameObject:
   m_ObjectHideFlags: 0

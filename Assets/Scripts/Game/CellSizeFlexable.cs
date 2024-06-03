@@ -5,10 +5,11 @@ public class CellSizeFlexable : MonoBehaviour
 {
     public GridLayoutGroup gridLayoutGroup;
     public int maxCellCount = 12;
+    private int childCount;
 
-    private void Update()
+    public void SetCellSize()
     {
-        int childCount = transform.childCount;
+        childCount = FindActiveChildCount();
         int rowCount = Mathf.CeilToInt((float)childCount / gridLayoutGroup.constraintCount);
 
         float totalWidth = gridLayoutGroup.cellSize.x * gridLayoutGroup.constraintCount + (gridLayoutGroup.spacing.x * (gridLayoutGroup.constraintCount - 1));
@@ -22,5 +23,18 @@ public class CellSizeFlexable : MonoBehaviour
             gridLayoutGroup.cellSize = new Vector2(newCellSizeX, newCellSizeY);
             maxCellCount *= 2;
         }
+    }
+
+    private int FindActiveChildCount()
+    {
+        int tempCount = 0;
+        foreach (Transform child in gridLayoutGroup.transform)
+        {
+            if (child != null && child.gameObject.activeSelf)
+            {
+                tempCount++;
+            }
+        }
+        return tempCount;
     }
 }

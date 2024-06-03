@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,11 +14,17 @@ public class Card : MonoBehaviour, ICardInteractable, IPointerClickHandler
     public Image cardImage;
     public Button cardButton;
 
+    private Card tempCard;
+
+    private float waitForDestroy = 10f;
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (Utils.IsNull(eventData.pointerPress.GetComponent<Card>()) && Utils.IsNull(pairMatchController))
+        if (Utils.IsNull(eventData.pointerPress.GetComponent<Card>()) && Utils.IsNull(pairMatchController)
+            && Utils.IsNull(eventData.pointerPress.GetComponent<Card>().cardButton))
         {
-            pairMatchController.OnCardClick(eventData.pointerPress.GetComponent<Card>());
+            tempCard = eventData.pointerPress.GetComponent<Card>();
+            OnCardClicked(tempCard.cardButton);
         }
     }
 
@@ -29,6 +36,7 @@ public class Card : MonoBehaviour, ICardInteractable, IPointerClickHandler
     public void PlayRemovoAnimation()
     {
         cardAnimator.Play(GlobalConstants.CARD_ANIMATOR_REMOVE_NAME);
+        StartCoroutine(DestroyCurrentGameObject());
     }
 
     public void PlaySelectAnimation()
@@ -49,6 +57,22 @@ public class Card : MonoBehaviour, ICardInteractable, IPointerClickHandler
     public void PlayWrongAnimation()
     {
         cardAnimator.Play(GlobalConstants.CARD_ANIMATOR_WRONG_NAME);
+    }
+
+    private void OnCardClicked(Button selectedButton)
+    {
+        if (selectedButton.interactable == true)
+        {
+            GlobalManager.Instance.audioManager.Play(GlobalConstants.FLIP_CARD_SFX_NAME);
+            pairMatchController.OnCardClick(tempCard);
+        }
+    }
+    IEnumerator DestroyCurrentGameObject()
+    {
+        yield return new WaitForSeconds(cardAnimator.GetCurrentAnimatorStateInfo(0).length);
+        this.gameObject.SetActive(false);
+        yield return new WaitForSeconds(waitForDestroy);
+        Destroy(this.gameObject);
     }
 }
 

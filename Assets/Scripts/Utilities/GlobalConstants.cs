@@ -4,6 +4,9 @@ public static class GlobalConstants
     public const string MENU_SCENE_NAME = "Menu";
     public const string THEME_SONG_NAME = "theme";
     public const string CORRECT_SFX_NAME = "correctSFX";
+    public const string WRONG_SFX_NAME = "wrongSFX";
+    public const string FLIP_CARD_SFX_NAME = "flipSFX";
+    public const string GAME_OVER_SFX_NAME = "gameOverSFX";
     public const string PLAYERPREFS_HIGH_SCORE_KEY_VALUE = "highScore";
     public const string PLAYERPREFS_CURRENT_SCORE_KEY_VALUE = "currentScore";
     public const string PLAYERPREFS_CURRENT_LEVEL_KEY_VALUE = "currentLevel";
