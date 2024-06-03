@@ -12,8 +12,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject gridLayoutGroup;
 
-    private float animationDuration = 1f;
-
     [Inject]
     private TimerController timerController;
 
@@ -23,9 +21,9 @@ public class LevelManager : MonoBehaviour
     [Inject]
     private CellSizeFlexable cellSizeFlexable;
 
-    private int pairsCountForCurrentLevel;
-
     private List<Button> buttons = new List<Button>();
+
+    private float animationDuration = 1f;
 
     public void InstantiateCards(List<CardData> cardList)
     {
@@ -45,7 +43,7 @@ public class LevelManager : MonoBehaviour
 
     public int CurrentLevelPairsCountCalculater(int firstLevelPairsCount, int pairsIncreaseCountPerLevel, int maximumPairsCount, int currentLevel)
     {
-        return pairsCountForCurrentLevel = Mathf.Min((currentLevel * pairsIncreaseCountPerLevel) + firstLevelPairsCount - 1, maximumPairsCount);
+        return Mathf.Min((currentLevel * pairsIncreaseCountPerLevel) + firstLevelPairsCount - 1, maximumPairsCount);
     }
 
     public void CollectAllButtons()
@@ -59,17 +57,21 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-    //null error
+
     private IEnumerator PlayAnimationAndEnableButtons()
     {
         foreach (Button button in buttons)
         {
             button.interactable = false;
-            yield return new WaitForSeconds(animationDuration);
+        }
 
+        yield return new WaitForSeconds(animationDuration);
+
+        foreach (Button button in buttons)
+        {
             button.interactable = true;
             timerController.StartTimer();
-        }
+        }        
     }
 
     public void ClearScene()

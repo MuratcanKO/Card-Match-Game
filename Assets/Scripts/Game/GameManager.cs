@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Input.multiTouchEnabled = false;
-        GetSettingsValues();
+        SetupValues();
         CreateLevel(0);
     }
 
@@ -44,30 +44,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void GameOver()
-    {
-        gameData.isGameOver = true;
-        GlobalManager.Instance.audioManager.Play(GlobalConstants.GAME_OVER_SFX_NAME);
-        gameUIManager.GameOver();
-        HighScoreCheck();
-        gameData.currentLevel = 1;
-        gameData.currentScore = 0;
-        playerPrefsManager.SetCurrentScore(gameData.currentScore);
-        playerPrefsManager.SetCurrentLevel(gameData.currentLevel);
-        scoreManager.ResetCombo();
-        scoreManager.ResetCurrentScore(gameData.currentScore);
-    }
-
-    private void NextLevel()
-    {
-        gameData.currentLevel++;
-        HighScoreCheck();
-        CreateLevel(gameData.waitForRemoveAnimations);
-        playerPrefsManager.SetCurrentScore(scoreManager.GetScore());
-        playerPrefsManager.SetCurrentLevel(gameData.currentLevel);
-    }
-
-    private void GetSettingsValues()
+    private void SetupValues()
     {
         SettingsParser.TransferData(GlobalManager.Instance.settingsReader.GameSettings, gameData);
         playerPrefsManager.GetAllData(gameData);
@@ -78,26 +55,21 @@ public class GameManager : MonoBehaviour
         scoreManager.SetInitialValues(gameData.currentScore, gameData.currentComboCount, gameData.maximumComboCount);
     }
 
-    public void CorrectCardMatch()
+    private void GameOver()
     {
-        scoreManager.AddScore(gameData.scoreCountPerMatch);
-        gameData.currentComboCount = Mathf.Min(gameData.currentComboCount + 1, gameData.maximumComboCount);
-        gameData.currentMatchCount++;
-        gameData.currentTurnCount++;
-        matchCountText.text = gameData.currentMatchCount.ToString();
-        TurnCountText.text = gameData.currentTurnCount.ToString();
-        if (gameData.currentMatchCount == gameData.targetMatchCount)
-        {
-            NextLevel();
-        }
+        gameData.isGameOver = true;
+        GlobalManager.Instance.audioManager.Play(GlobalConstants.GAME_OVER_SFX_NAME);
+        gameUIManager.GameOver();
+        HighScoreCheck();
+        ResetCurrentLevelAndScore();
     }
 
-    public void WrongCardMatch()
+    private void CreateNextLevel()
     {
-        gameData.currentComboCount = 1;
-        gameData.currentTurnCount++;
-        TurnCountText.text = gameData.currentTurnCount.ToString();
-        scoreManager.ResetCombo();
+        gameData.currentLevel++;
+        HighScoreCheck();
+        CreateLevel(gameData.waitForRemoveAnimations);
+        SaveCurrentLevelAndScore();
     }
 
     private void CreateLevel(float delaySecond)
@@ -117,19 +89,35 @@ public class GameManager : MonoBehaviour
         CardListManager.CreateCardList(gameData, currentLevelCardList);
         CardListManager.ShuffleCardList(currentLevelCardList);
         gameData.targetMatchCount = gameData.currentLevelPairsCount;
-        gameData.currentMatchCount = 0;
-        gameData.currentTurnCount = 0;
-        gameData.currentComboCount = 1;
+        scoreManager.ResetCombo();
 
         yield return new WaitForSeconds(delayForAnimation);
 
         levelManager.ClearScene();
-        matchCountText.text = gameData.currentMatchCount.ToString();
-        TurnCountText.text = gameData.currentTurnCount.ToString();
+        ResetMatchAndTurnCountText();
 
         yield return new WaitForSeconds(delayForAnimation);
 
         levelManager.InstantiateCards(currentLevelCardList);
+    }
+
+    public void CorrectCardMatch()
+    {
+        scoreManager.AddScore(gameData.scoreCountPerMatch);
+        IncreaseTurnCountText();
+        IncreaseMatchCountText();
+        if (gameData.currentMatchCount == gameData.targetMatchCount)
+        {
+            CreateNextLevel();
+        }
+    }
+
+    public void WrongCardMatch()
+    {
+        gameData.currentComboCount = 1;
+        gameData.currentTurnCount++;
+        TurnCountText.text = gameData.currentTurnCount.ToString();
+        scoreManager.ResetCombo();
     }
 
     private void HighScoreCheck()
@@ -138,5 +126,40 @@ public class GameManager : MonoBehaviour
         {
             playerPrefsManager.SetHighScore(scoreManager.GetScore());
         }
+    }
+
+    private void ResetCurrentLevelAndScore()
+    {
+        gameData.currentLevel = 1;
+        gameData.currentScore = 0;
+        playerPrefsManager.SetCurrentScore(gameData.currentScore);
+        playerPrefsManager.SetCurrentLevel(gameData.currentLevel);
+        scoreManager.ResetCombo();
+        scoreManager.ResetCurrentScore(gameData.currentScore);
+    }
+    private void SaveCurrentLevelAndScore()
+    {
+        playerPrefsManager.SetCurrentScore(scoreManager.GetScore());
+        playerPrefsManager.SetCurrentLevel(gameData.currentLevel);
+    }
+
+    private void IncreaseTurnCountText()
+    {
+        gameData.currentTurnCount++;
+        TurnCountText.text = gameData.currentTurnCount.ToString();
+    }
+
+    private void IncreaseMatchCountText()
+    {
+        gameData.currentMatchCount++;
+        matchCountText.text = gameData.currentMatchCount.ToString();
+    }
+
+    private void ResetMatchAndTurnCountText()
+    {
+        gameData.currentMatchCount = 0;
+        gameData.currentTurnCount = 0;
+        matchCountText.text = gameData.currentMatchCount.ToString();
+        TurnCountText.text = gameData.currentTurnCount.ToString();
     }
 }
