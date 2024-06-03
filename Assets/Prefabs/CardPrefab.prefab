@@ -465,4 +465,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardAnimator: {fileID: 662194653749343894}
   cardIndex: 0
-  cardImage: {fileID: 44273644512842375}
+  cardImage: {fileID: 6942380186344137640}
+  cardButton: {fileID: 4193252211896665997}

@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     [Inject]
     private PlayerPrefsManager playerPrefsManager;
 
+    [Inject]
+    private PairMatchController pairMatchController;
+
     private List<CardData> currentLevelCardList = new List<CardData>();
 
     private int firstLevelPairsCount = 2;
@@ -35,11 +38,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Input.multiTouchEnabled = false;
         GetSettingsValues();
+        timerController.SetTimerValue(firstLevelTimerCount, timerDescreaseCountPerLevel, minimumTimerCount, currentLevel);
         CreateCardList();
         ShuffleCardList();
         levelManager.InstantiateCards(currentLevelCardList);
-        timerController.StartTimer();
     }
 
     void Update()
@@ -49,6 +53,11 @@ public class GameManager : MonoBehaviour
             GameOver();
             gameUIManager.GameOver();
         }
+        if (pairMatchController != null)
+        {
+            Debug.Log("YES");
+        }
+        
     }
 
     private void GameOver()

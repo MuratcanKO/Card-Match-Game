@@ -1,7 +1,9 @@
+using UnityEngine;
 using Zenject;
 
 public class ZenjectInstaller : MonoInstaller
 {
+    public GameObject cardPrefab;
     public override void InstallBindings()
     {
         Container.Bind<TimerController>().FromComponentInHierarchy().AsSingle();
@@ -9,5 +11,8 @@ public class ZenjectInstaller : MonoInstaller
         Container.Bind<ScoreManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<GameUIManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<LevelManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PairMatchController>().FromComponentInHierarchy().AsSingle();
+
+        Container.BindFactory<Card, CardFactory>().FromComponentInNewPrefab(cardPrefab);
     }
 }

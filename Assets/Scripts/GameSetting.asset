@@ -18,8 +18,6 @@ MonoBehaviour:
   firstLevelTimerCount: 30
   timerDescreaseCountPerLevel: 0
   minimumTimerCount: 30
-  currentLevel: 1
-  currentScore: 0
   scoreCountPerMatch: 50
   maximumComboCount: 5
   pairsImages:

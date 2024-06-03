@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class TimerController : MonoBehaviour
 {
+    [HideInInspector]
     public float totalTime = 30f;
+
+    [HideInInspector]
     public float currentTime = 30f;
+
     private int currentSecond = 30;
     private bool isTimerRunning = false;
 
@@ -51,5 +55,12 @@ public class TimerController : MonoBehaviour
         currentTime = totalTime;
         isTimerRunning = false;
         UpdateTimerText();
+    }
+
+    public void SetTimerValue(int firstLevelTimerCount, int timerDescreaseCountPerLevel, int minimumTimerCount, int currentLevel)
+    {
+        int tempTimer = firstLevelTimerCount + timerDescreaseCountPerLevel - (currentLevel * timerDescreaseCountPerLevel);
+        totalTime = Mathf.Min(tempTimer, minimumTimerCount);
+        ResetTimer();
     }
 }
