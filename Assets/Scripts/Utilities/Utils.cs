@@ -6,4 +6,9 @@ public static class Utils
     {
         return obj != null;
     }
+
+    public static bool IsNullForSound(Sound sound)
+    {
+        return (sound != null || sound.source != null);
+    }
 }

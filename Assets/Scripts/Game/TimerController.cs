@@ -4,15 +4,15 @@ using UnityEngine;
 public class TimerController : MonoBehaviour
 {
     [HideInInspector]
-    public float totalTime = 30f;
-
-    [HideInInspector]
     public float currentTime = 30f;
 
-    private int currentSecond = 30;
-    private bool isTimerRunning = false;
+    [SerializeField]
+    private TextMeshProUGUI timerText;
 
-    public TextMeshProUGUI timerText;
+    private float totalTime = 30f;
+    private int currentSecond = 30;
+
+    private bool isTimerRunning = false;
 
     private void Start()
     {
@@ -27,7 +27,6 @@ public class TimerController : MonoBehaviour
             if (currentTime <= 0f)
             {
                 currentTime = 0f;
-                UpdateTimerText();
                 isTimerRunning = false;
             }
             UpdateTimerText();
@@ -36,7 +35,7 @@ public class TimerController : MonoBehaviour
 
     private void UpdateTimerText()
     {
-        currentSecond = Mathf.FloorToInt(currentTime % 60f);
+        currentSecond = Mathf.FloorToInt(currentTime);
         timerText.text = currentSecond.ToString();
     }
 
@@ -60,7 +59,7 @@ public class TimerController : MonoBehaviour
     public void SetTimerValue(int firstLevelTimerCount, int timerDescreaseCountPerLevel, int minimumTimerCount, int currentLevel)
     {
         int tempTimer = firstLevelTimerCount + timerDescreaseCountPerLevel - (currentLevel * timerDescreaseCountPerLevel);
-        totalTime = Mathf.Min(tempTimer, minimumTimerCount);
+        totalTime = Mathf.Max(tempTimer, minimumTimerCount);
         ResetTimer();
     }
 }

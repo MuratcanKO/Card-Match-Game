@@ -19,13 +19,13 @@ public class MenuUIManager : MonoBehaviour
     private GameObject buttonPlay;
 
     [SerializeField]
-    private SceneLoader menuSceneLoader;
+    private SceneLoader sceneLoader;
 
     public void PlayButtonClicked()
     {
         buttonPlay.SetActive(false);
         loadingImage.SetActive(true);
-        menuSceneLoader.AsyncSceneLoader(GlobalConstants.GAME_SCENE_NAME);
+        sceneLoader.AsyncSceneLoader(GlobalConstants.GAME_SCENE_NAME);
     }
 
     public void MusicButtonClicked() 

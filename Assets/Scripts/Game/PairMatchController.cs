@@ -1,15 +1,13 @@
-using DG.Tweening.Core.Easing;
 using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public class PairMatchController : MonoBehaviour
 {
-    private float animationDuration = 0.3f;
-    private Card firstCard;
-
     [Inject]
     private GameManager gameManager;
+
+    private Card firstCard;
 
     private void Start()
     {
@@ -27,7 +25,6 @@ public class PairMatchController : MonoBehaviour
         else if (firstCard.cardIndex == card.cardIndex)
         {
             StartCoroutine(MatchCards(firstCard, card));
-            
         }
         else
         {
@@ -44,7 +41,7 @@ public class PairMatchController : MonoBehaviour
         firstCard.cardButton.interactable = false;
         secondCard.cardButton.interactable = false;
 
-        yield return new WaitForSeconds(animationDuration);
+        yield return new WaitForSeconds(secondCard.cardAnimator.GetCurrentAnimatorStateInfo(0).length);
 
         firstCard.PlayCorrectAnimation();
         secondCard.PlayCorrectAnimation();
@@ -61,14 +58,14 @@ public class PairMatchController : MonoBehaviour
         firstCard.cardButton.interactable = false;
         secondCard.cardButton.interactable = false;
 
-        yield return new WaitForSeconds(animationDuration);
+        yield return new WaitForSeconds(secondCard.cardAnimator.GetCurrentAnimatorStateInfo(0).length);
 
         firstCard.PlayWrongAnimation();
         secondCard.PlayWrongAnimation();
 
         GlobalManager.Instance.audioManager.Play(GlobalConstants.WRONG_SFX_NAME);
 
-        yield return new WaitForSeconds(animationDuration);
+        yield return new WaitForSeconds(secondCard.cardAnimator.GetCurrentAnimatorStateInfo(0).length);
 
         firstCard.cardButton.interactable = true;
         secondCard.cardButton.interactable = true;

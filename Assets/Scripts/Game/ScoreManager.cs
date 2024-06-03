@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -10,20 +9,19 @@ public class ScoreManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
 
-    [Inject]
-    private PlayerPrefsManager playerPrefsManager;
-
-    private void Start()
+    public void AddScore(int scoreCountPerMatch)
     {
-        currentScore = playerPrefsManager.GetCurrentScore();
-        UpdateText();
-    }
-
-    public void AddScore(int scoreCountPerMatch, int comboMultiplierCount)
-    {
-        currentScore += scoreCountPerMatch * comboMultiplierCount;
+        currentScore += scoreCountPerMatch * comboMultiplier;
         UpdateText();
         UpdateCombo();
+    }
+
+    public void SetInitialValues(int updatedScore, int comboMultiplierCount, int maxComboValue)
+    {
+        currentScore = updatedScore;
+        comboMultiplier = comboMultiplierCount;
+        maxComboMultiplier = maxComboValue;
+        UpdateText();
     }
 
     private void UpdateCombo()
@@ -35,11 +33,15 @@ public class ScoreManager : MonoBehaviour
     {
         scoreText.text = currentScore.ToString();
     }
-        
 
     public void ResetCombo()
     {
         comboMultiplier = 1;
+    }
+
+    public void ResetCurrentScore(int updatedScore) 
+    {
+        currentScore = updatedScore;
     }
 
     public int GetScore()

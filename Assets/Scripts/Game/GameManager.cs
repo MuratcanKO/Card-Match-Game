@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using Zenject;
+
 public class GameManager : MonoBehaviour
 {
     [Inject]
@@ -20,32 +21,13 @@ public class GameManager : MonoBehaviour
     [Inject]
     private ScoreManager scoreManager;
 
+    private GameData gameData = new GameData();
 
     private List<CardData> currentLevelCardList = new List<CardData>();
 
-    private int firstLevelPairsCount = 2;
-    private int pairsIncreaseCountPerLevel = 1;
-    private int maximumPairsCount = 8;
-    private int firstLevelTimerCount = 30;
-    private int timerDescreaseCountPerLevel = 0;
-    private int minimumTimerCount = 30;
-    private int scoreCountPerMatch = 50;
-    private int maximumComboCount = 5;
-    private int currentComboCount = 1;
-    private int currentLevel = 1;
-    private int currentScore = 0;
-    private int currentMatchCount = 0;
-    private int targetMatchCount = 0;
-    private int currentTurnCount = 0;
-    private float waitForRemoveAnimations = 1f;
-
-    private bool isGameOver = false;
-
-    private Sprite[] pairsImages;
-
-    private int currentLevelPairsCount;
-
-    public GameObject confettiRainbowPrefab;
+    public TextMeshProUGUI matchCountText;
+    public TextMeshProUGUI TurnCountText;
+    public TextMeshProUGUI currentScoreText;
 
     void Start()
     {
@@ -56,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (timerController.currentTime <= 0f && !isGameOver)
+        if (timerController.currentTime <= 0f && !gameData.isGameOver)
         {
             GameOver();
         }
@@ -64,71 +46,47 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        isGameOver = true;
+        gameData.isGameOver = true;
         GlobalManager.Instance.audioManager.Play(GlobalConstants.GAME_OVER_SFX_NAME);
         gameUIManager.GameOver();
+        HighScoreCheck();
+        gameData.currentLevel = 1;
+        gameData.currentScore = 0;
+        playerPrefsManager.SetCurrentScore(gameData.currentScore);
+        playerPrefsManager.SetCurrentLevel(gameData.currentLevel);
+        scoreManager.ResetCombo();
+        scoreManager.ResetCurrentScore(gameData.currentScore);
     }
 
     private void NextLevel()
     {
-        currentLevel++;
-        CreateLevel(waitForRemoveAnimations);
+        gameData.currentLevel++;
+        HighScoreCheck();
+        CreateLevel(gameData.waitForRemoveAnimations);
+        playerPrefsManager.SetCurrentScore(scoreManager.GetScore());
+        playerPrefsManager.SetCurrentLevel(gameData.currentLevel);
     }
 
     private void GetSettingsValues()
     {
-        firstLevelPairsCount = GlobalManager.Instance.settingsReader.GameSettings.FirstLevelPairsCount;
-        pairsIncreaseCountPerLevel = GlobalManager.Instance.settingsReader.GameSettings.PairsIncreaseCountPerLevel;
-        maximumPairsCount = GlobalManager.Instance.settingsReader.GameSettings.MaximumPairsCount;
-        firstLevelTimerCount = GlobalManager.Instance.settingsReader.GameSettings.FirstLevelTimerCount;
-        timerDescreaseCountPerLevel = GlobalManager.Instance.settingsReader.GameSettings.TimerDescreaseCountPerLevel;
-        minimumTimerCount = GlobalManager.Instance.settingsReader.GameSettings.MinimumTimerCount;
-        scoreCountPerMatch = GlobalManager.Instance.settingsReader.GameSettings.ScoreCountPerMatch;
-        maximumComboCount = GlobalManager.Instance.settingsReader.GameSettings.MaximumComboCount;
-        pairsImages = GlobalManager.Instance.settingsReader.GameSettings.PairsImages;
-        currentLevel = playerPrefsManager.GetCurrentLevel();
-        currentScore = playerPrefsManager.GetCurrentScore();
-        currentLevelPairsCount = levelManager.CurrentLevelPairsCountCalculater(firstLevelPairsCount, pairsIncreaseCountPerLevel,
-            maximumPairsCount, currentLevel);
-    }
-
-    private void CreateCardList()
-    {
-        for (int i = 0; i < currentLevelPairsCount; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                CardData newCardData;
-                newCardData.cardIndex = i;
-                newCardData.cardSprite = pairsImages[i];
-                currentLevelCardList.Add(newCardData);
-            }
-        }
-    }
-
-    private void ShuffleCardList()
-    {
-        for (int i = 0; i < currentLevelCardList.Count; i++)
-        {
-            CardData temp = currentLevelCardList[i];
-            int randomIndex = Random.Range(i, currentLevelCardList.Count);
-            currentLevelCardList[i] = currentLevelCardList[randomIndex];
-            currentLevelCardList[randomIndex] = temp;
-        }
-    }
-
-    private void ResetCardList(List<CardData> cardList)
-    {
-        cardList.Clear();
+        SettingsParser.TransferData(GlobalManager.Instance.settingsReader.GameSettings, gameData);
+        playerPrefsManager.GetAllData(gameData);
+        gameData.currentLevelPairsCount = levelManager.CurrentLevelPairsCountCalculater(gameData.firstLevelPairsCount,
+            gameData.pairsIncreaseCountPerLevel,
+            gameData.maximumPairsCount, gameData.currentLevel);
+        currentScoreText.text = gameData.currentScore.ToString();
+        scoreManager.SetInitialValues(gameData.currentScore, gameData.currentComboCount, gameData.maximumComboCount);
     }
 
     public void CorrectCardMatch()
     {
-        scoreManager.AddScore(scoreCountPerMatch, currentComboCount);
-        currentComboCount = Mathf.Min(currentComboCount + 1, maximumComboCount);
-        currentMatchCount++;
-        currentTurnCount++;
-        if (currentMatchCount == targetMatchCount)
+        scoreManager.AddScore(gameData.scoreCountPerMatch);
+        gameData.currentComboCount = Mathf.Min(gameData.currentComboCount + 1, gameData.maximumComboCount);
+        gameData.currentMatchCount++;
+        gameData.currentTurnCount++;
+        matchCountText.text = gameData.currentMatchCount.ToString();
+        TurnCountText.text = gameData.currentTurnCount.ToString();
+        if (gameData.currentMatchCount == gameData.targetMatchCount)
         {
             NextLevel();
         }
@@ -136,32 +94,49 @@ public class GameManager : MonoBehaviour
 
     public void WrongCardMatch()
     {
-        currentComboCount = 1;
-        currentTurnCount++;
+        gameData.currentComboCount = 1;
+        gameData.currentTurnCount++;
+        TurnCountText.text = gameData.currentTurnCount.ToString();
+        scoreManager.ResetCombo();
     }
 
     private void CreateLevel(float delaySecond)
     {
-        levelManager.ClearScene();
-        currentLevelPairsCount = levelManager.CurrentLevelPairsCountCalculater(firstLevelPairsCount, pairsIncreaseCountPerLevel,
-            maximumPairsCount, currentLevel);
-        timerController.ResetTimer();
-        timerController.SetTimerValue(firstLevelTimerCount, timerDescreaseCountPerLevel, minimumTimerCount, currentLevel);
-        ResetCardList(currentLevelCardList);
-        CreateCardList();
-        ShuffleCardList();
-        targetMatchCount = currentLevelPairsCount;
-        currentMatchCount = 0;
-        currentTurnCount = 0;
-        currentComboCount = 1;
         StartCoroutine(LevelInstantiate(delaySecond));
-        
     }
 
     private IEnumerator LevelInstantiate(float delayForAnimation)
     {
+        gameData.currentLevelPairsCount = levelManager.CurrentLevelPairsCountCalculater(gameData.firstLevelPairsCount,
+            gameData.pairsIncreaseCountPerLevel,
+            gameData.maximumPairsCount, gameData.currentLevel);
+        timerController.ResetTimer();
+        timerController.SetTimerValue(gameData.firstLevelTimerCount, gameData.timerDescreaseCountPerLevel,
+            gameData.minimumTimerCount, gameData.currentLevel);
+        CardListManager.ResetCardList(currentLevelCardList);
+        CardListManager.CreateCardList(gameData, currentLevelCardList);
+        CardListManager.ShuffleCardList(currentLevelCardList);
+        gameData.targetMatchCount = gameData.currentLevelPairsCount;
+        gameData.currentMatchCount = 0;
+        gameData.currentTurnCount = 0;
+        gameData.currentComboCount = 1;
+
+        yield return new WaitForSeconds(delayForAnimation);
+
+        levelManager.ClearScene();
+        matchCountText.text = gameData.currentMatchCount.ToString();
+        TurnCountText.text = gameData.currentTurnCount.ToString();
+
         yield return new WaitForSeconds(delayForAnimation);
 
         levelManager.InstantiateCards(currentLevelCardList);
+    }
+
+    private void HighScoreCheck()
+    {
+        if (scoreManager.GetScore() > gameData.highScore)
+        {
+            playerPrefsManager.SetHighScore(scoreManager.GetScore());
+        }
     }
 }

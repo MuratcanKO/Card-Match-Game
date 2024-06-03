@@ -1023,7 +1023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f8805ec7c9ff0e458f958fa8251defa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationDuration: 1
 --- !u!1 &914867190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,8 +1501,8 @@ Camera:
   m_GameObject: {fileID: 1342250862}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0.36078432, b: 0.60784316, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.0316541, g: 0.7996494, b: 0.9150943, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1595,7 +1594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fd45b549fa7ec42b6d370a411f4c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalTime: 30
   currentTime: 30
   timerText: {fileID: 399538222}
 --- !u!1 &1501709462
@@ -1642,7 +1640,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b72cb6dccf01b64db337e04a47af616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confettiRainbowPrefab: {fileID: 0}
+  matchCountText: {fileID: 741107608}
+  TurnCountText: {fileID: 743696606}
+  currentScoreText: {fileID: 1256603750}
 --- !u!1 &1596167446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1959,7 +1959,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8534304464554128925, guid: cf047a1f411009d4c97b6d75f8972bea, type: 3}
   gridLayoutGroup: {fileID: 1917096901}
-  animationDuration: 1
 --- !u!1 &1917096901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,7 +2157,7 @@ GameObject:
   - component: {fileID: 5616495517566881878}
   - component: {fileID: 8364063224738636202}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: HomeIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2176,7 +2175,7 @@ GameObject:
   - component: {fileID: 5509227904330150570}
   - component: {fileID: 5659221056428765366}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2315,7 +2314,7 @@ GameObject:
   - component: {fileID: 488731201336171878}
   - component: {fileID: 8099424725460433154}
   m_Layer: 5
-  m_Name: Button_ReStart
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7384,7 +7383,7 @@ GameObject:
   - component: {fileID: 830513002241540361}
   - component: {fileID: 4233542055450736079}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: RestartIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7403,7 +7402,7 @@ GameObject:
   - component: {fileID: 4785595070207451557}
   - component: {fileID: 1111621206212645146}
   m_Layer: 5
-  m_Name: Button_Restart
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7453,7 +7452,7 @@ GameObject:
   - component: {fileID: 8253159132673373627}
   - component: {fileID: 8258857795319371580}
   m_Layer: 5
-  m_Name: Fx_Circle
+  m_Name: CircleFx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7639,7 +7638,7 @@ GameObject:
   - component: {fileID: 7877015384696113090}
   - component: {fileID: 5673625902072334754}
   m_Layer: 5
-  m_Name: Fx_GameOver
+  m_Name: GameOverFx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7657,7 +7656,7 @@ GameObject:
   - component: {fileID: 3383058420154811195}
   - component: {fileID: 5323461234691888764}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: ContinueIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12651,7 +12650,7 @@ GameObject:
   - component: {fileID: 6905050314226169416}
   - component: {fileID: 2080253140464904612}
   m_Layer: 5
-  m_Name: Text_Restart
+  m_Name: RestartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12697,7 +12696,7 @@ GameObject:
   - component: {fileID: 7993456442406714856}
   - component: {fileID: 3503565225589550902}
   m_Layer: 5
-  m_Name: Text_Home
+  m_Name: HomeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13025,7 +13024,7 @@ GameObject:
   - component: {fileID: 3620898978417075735}
   - component: {fileID: 3620898978417075732}
   m_Layer: 5
-  m_Name: Image_Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13064,7 +13063,7 @@ GameObject:
   - component: {fileID: 7176148774494492826}
   - component: {fileID: 2062669614708161294}
   m_Layer: 5
-  m_Name: Button_Home
+  m_Name: HomeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13082,7 +13081,7 @@ GameObject:
   - component: {fileID: 8467797650568319443}
   - component: {fileID: 4954418580150500045}
   m_Layer: 5
-  m_Name: Text_Pause
+  m_Name: PauseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13121,7 +13120,7 @@ GameObject:
   - component: {fileID: 1928324909271716481}
   - component: {fileID: 700904419441157834}
   m_Layer: 5
-  m_Name: Button_Music
+  m_Name: MusicButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13247,7 +13246,7 @@ GameObject:
   - component: {fileID: 526845695534447253}
   - component: {fileID: 5841690417554148108}
   m_Layer: 5
-  m_Name: Fx_Glow
+  m_Name: GlowFx_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13498,7 +13497,7 @@ GameObject:
   - component: {fileID: 7261447504502057493}
   - component: {fileID: 5147876583918233506}
   m_Layer: 5
-  m_Name: Button_Settings
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13729,7 +13728,7 @@ GameObject:
   - component: {fileID: 6428476830389926834}
   - component: {fileID: 2331287665875259011}
   m_Layer: 5
-  m_Name: Text_Music
+  m_Name: MusicText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13784,7 +13783,7 @@ GameObject:
   - component: {fileID: 6349609428681529395}
   - component: {fileID: 111802293167312238}
   m_Layer: 5
-  m_Name: Button_ReturnHome
+  m_Name: ReturnHomeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13818,7 +13817,7 @@ GameObject:
   - component: {fileID: 91633228038694082}
   - component: {fileID: 8461500440024510997}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: MusicIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13988,7 +13987,7 @@ GameObject:
   - component: {fileID: 5451149025378401722}
   - component: {fileID: 4774036113988154252}
   m_Layer: 5
-  m_Name: Text_ReturnHome
+  m_Name: ReturnHomeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14006,7 +14005,7 @@ GameObject:
   - component: {fileID: 1014538198533253550}
   - component: {fileID: 4828536876042682178}
   m_Layer: 5
-  m_Name: Text_ReStart
+  m_Name: RestartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14024,7 +14023,7 @@ GameObject:
   - component: {fileID: 5399073331339660838}
   - component: {fileID: 1274726626664354105}
   m_Layer: 5
-  m_Name: Text_Continue
+  m_Name: ContinueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18819,7 +18818,7 @@ GameObject:
   - component: {fileID: 6741275571292186734}
   - component: {fileID: 7792461105381941050}
   m_Layer: 5
-  m_Name: Text_GameOver
+  m_Name: GameOverText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19609,7 +19608,7 @@ GameObject:
   - component: {fileID: 7944319307695086132}
   - component: {fileID: 4545337979180080716}
   m_Layer: 5
-  m_Name: Button_Continue
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

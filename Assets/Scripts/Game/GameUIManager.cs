@@ -21,7 +21,6 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private Sprite soundOffSprite;
 
-
     public void SettingsButtonClicked()
     {
         settingsUIScreen.SetActive(true);

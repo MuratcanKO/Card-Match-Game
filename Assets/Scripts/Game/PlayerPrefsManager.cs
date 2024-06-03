@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class PlayerPrefsManager : MonoBehaviour
 {
@@ -30,6 +31,13 @@ public class PlayerPrefsManager : MonoBehaviour
     public void SetHighScore(int score)
     {
         PlayerPrefs.SetInt(GlobalConstants.PLAYERPREFS_HIGH_SCORE_KEY_VALUE, score);
+    }
+
+    public void GetAllData(GameData gameData)
+    {
+        gameData.currentScore = PlayerPrefs.GetInt(GlobalConstants.PLAYERPREFS_CURRENT_SCORE_KEY_VALUE, 0);
+        gameData.currentLevel = PlayerPrefs.GetInt(GlobalConstants.PLAYERPREFS_CURRENT_LEVEL_KEY_VALUE, 1);
+        gameData.highScore = PlayerPrefs.GetInt(GlobalConstants.PLAYERPREFS_HIGH_SCORE_KEY_VALUE, 0);
     }
 
     public void ResetPlayerPrefs()

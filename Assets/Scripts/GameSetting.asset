@@ -15,9 +15,9 @@ MonoBehaviour:
   firstLevelPairsCount: 2
   pairsIncreaseCountPerLevel: 1
   maximumPairsCount: 8
-  firstLevelTimerCount: 30
+  firstLevelTimerCount: 10
   timerDescreaseCountPerLevel: 0
-  minimumTimerCount: 30
+  minimumTimerCount: 10
   scoreCountPerMatch: 50
   maximumComboCount: 5
   pairsImages:

@@ -24,7 +24,7 @@ public class Card : MonoBehaviour, ICardInteractable, IPointerClickHandler
             && Utils.IsNull(eventData.pointerPress.GetComponent<Card>().cardButton))
         {
             tempCard = eventData.pointerPress.GetComponent<Card>();
-            OnCardClicked(tempCard.cardButton);
+            OnCardClicked(tempCard.cardButton, tempCard);
         }
     }
 
@@ -59,12 +59,12 @@ public class Card : MonoBehaviour, ICardInteractable, IPointerClickHandler
         cardAnimator.Play(GlobalConstants.CARD_ANIMATOR_WRONG_NAME);
     }
 
-    private void OnCardClicked(Button selectedButton)
+    private void OnCardClicked(Button selectedButton, Card selectedCard)
     {
         if (selectedButton.interactable == true)
         {
             GlobalManager.Instance.audioManager.Play(GlobalConstants.FLIP_CARD_SFX_NAME);
-            pairMatchController.OnCardClick(tempCard);
+            pairMatchController.OnCardClick(selectedCard);
         }
     }
     IEnumerator DestroyCurrentGameObject()

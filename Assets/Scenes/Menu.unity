@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 1133089248}
   - component: {fileID: 1133089247}
   m_Layer: 5
-  m_Name: Text_Description
+  m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 1355468604}
   - component: {fileID: 1355468603}
   m_Layer: 5
-  m_Name: Text_HighScore
+  m_Name: HighScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -894,7 +894,7 @@ MonoBehaviour:
   soundOnSprite: {fileID: 21300000, guid: 936518f1bc690704c92df0f18a941994, type: 3}
   soundOffSprite: {fileID: 21300000, guid: 3e944fff620401a41ad6a4d2c536e5a6, type: 3}
   buttonPlay: {fileID: 410454520922644117}
-  menuSceneLoader: {fileID: 1442431996}
+  sceneLoader: {fileID: 1442431996}
 --- !u!114 &1442431996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 2137942914}
   - component: {fileID: 2137942913}
   m_Layer: 5
-  m_Name: Image_Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 5162113703629904292}
   - component: {fileID: 6132962816574029902}
   m_Layer: 5
-  m_Name: Button_Play
+  m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1266,7 +1266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1210291068910005096}
   m_Layer: 5
-  m_Name: Image_ProfilePicture
+  m_Name: ProfilePictureImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1592,7 +1592,7 @@ GameObject:
   - component: {fileID: 8522683880305608921}
   - component: {fileID: 6193454061922207086}
   m_Layer: 5
-  m_Name: Button_Sound
+  m_Name: SoundButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1931,7 +1931,7 @@ GameObject:
   - component: {fileID: 8201133477223700636}
   - component: {fileID: 3702829357876917506}
   m_Layer: 5
-  m_Name: Loading
+  m_Name: LoadingImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1950,7 +1950,7 @@ GameObject:
   - component: {fileID: 5765568142387739573}
   - component: {fileID: 2869495633396065706}
   m_Layer: 5
-  m_Name: Loading_Rotate
+  m_Name: LoadingRotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1968,7 +1968,7 @@ GameObject:
   - component: {fileID: 2321544617022765411}
   - component: {fileID: 5936045544251833710}
   m_Layer: 5
-  m_Name: Text_Battle
+  m_Name: PlayText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

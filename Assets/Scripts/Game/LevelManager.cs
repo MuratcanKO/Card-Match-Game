@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject gridLayoutGroup;
 
-    public float animationDuration = 1f;
+    private float animationDuration = 1f;
 
     [Inject]
     private TimerController timerController;
@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
+    //null error
     private IEnumerator PlayAnimationAndEnableButtons()
     {
         foreach (Button button in buttons)

@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.source == null)
+        if (!Utils.IsNullForSound(s))
         {
             return;
         }
@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
     {
 
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.source == null)
+        if (!Utils.IsNullForSound(s))
         {
             return;
         }
@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
     {
 
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.source == null)
+        if (!Utils.IsNullForSound(s))
         {
             return;
         }
@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
     {
 
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.source == null)
+        if (!Utils.IsNullForSound(s))
         {
             return 0;
         }
@@ -65,7 +65,7 @@ public class AudioManager : MonoBehaviour
     {
 
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.source == null)
+        if (!Utils.IsNullForSound(s))
         {
             return false;
         }

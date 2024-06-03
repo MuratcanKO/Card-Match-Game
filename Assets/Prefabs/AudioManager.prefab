@@ -65,7 +65,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: gameOverSFX
     clip: {fileID: 8300000, guid: 4fd1e5668fc48814a864140fd7e9d145, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
     source: {fileID: 0}
