@@ -8,8 +8,6 @@ public class GameInitialize : MonoBehaviour
 
     private int highScoreValue;
 
-    private bool themeSongStarted = false;
-
     void Start()
     {
         highScoreValue = PlayerPrefs.GetInt(GlobalConstants.PLAYERPREFS_HIGH_SCORE_KEY_VALUE, 0);
@@ -17,26 +15,11 @@ public class GameInitialize : MonoBehaviour
         PlayThemeSong();
     }
 
-    void Update()
-    {
-        if (!themeSongStarted)
-        {
-            PlayThemeSong();
-        }
-    }
-
     private void PlayThemeSong()
     {
         if (Utils.IsNull(GlobalManager.Instance.audioManager)) 
         {
-            if (GlobalManager.Instance.audioManager.IsPlaying(GlobalConstants.THEME_SONG_NAME))
-            {
-                themeSongStarted = true;
-            }
-            else
-            {
-                GlobalManager.Instance.audioManager.Play(GlobalConstants.THEME_SONG_NAME);
-            }
+            GlobalManager.Instance.audioManager.Play(GlobalConstants.THEME_SONG_NAME);
         }
     }
 }
